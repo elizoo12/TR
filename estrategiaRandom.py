@@ -92,7 +92,7 @@ def jugada_ordenador():
 
 
 def jugada_humana():
-    # pedimos una jugada
+  # pedimos una jugada
   print("es el turno del Jugador ")
   posicion = input("elige una casilla entre 1-9: ")
 
