@@ -81,7 +81,7 @@ def calcularJugada(i, TableroImaginario):
   posicionImaginaria-=1
   if TableroImaginario[posicionImaginaria]== "-":
       TableroImaginario[posicionImaginaria]="O"
-      GanadorImaginario= comprobar_victoria_imaginaria()
+      GanadorImaginario= comprobar_victoria_imaginaria(TableroImaginario)
       if GanadorImaginario== "O":
          
           return posicionImaginaria
@@ -105,25 +105,28 @@ def jugada_ordenador():
     #tramemos las variables globales.
     hayGanadorImaginaro=False
     print("es turno del ordenador ")
-    
+    #HACEMOS TRAMPAS; BORRAR ANTES DE HACER NADA XD
+    Tablero[0] = "O"
+    Tablero[1] = "O"
+    #HACEMOS TRAMPAS; BORRAR ANTES DE HACER NADA XD
     for i in range(1,9):
       jugada = calcularJugada(i, Tablero[:])
-      if (jugada != -1):
-         Tablero[jugada]="O"
-         hayGanadorImaginaro = True
-         break
+      if (jugada >= 0 ):
+        print ("Tenemos jugada ganadora")
+        Tablero[jugada]="O"
+        hayGanadorImaginaro = True
+        break
        
     if not hayGanadorImaginaro:
         valido=False
         while not valido:
           print("#1 El ordenador esta calculando una jugada aleatoria ")
           jugada = calcularJugadaAleatoria(Tablero[:])
-          if (jugada != -1):
+          if (jugada >= 0 ):
             Tablero[jugada]="O"
             hayGanadorImaginaro = True
-            break
-       
-            
+            break 
+    MostrarTablero()
     return
 
 
@@ -166,9 +169,9 @@ def comprobar_victoria():
   # Set global variables
   global Ganador
   # traemos las variables globales necesarias
-  ganador_fila = comprobar_filas()
-  ganador_columna = comprobar_columnas()
-  ganador_diagonal = comprobar_diagonales()
+  ganador_fila = comprobar_filas(Tablero)
+  ganador_columna = comprobar_columnas(Tablero)
+  ganador_diagonal = comprobar_diagonales(Tablero)
   # Obtenemos el jugador victorioso
   if ganador_fila:
     Ganador = ganador_fila
@@ -181,7 +184,7 @@ def comprobar_victoria():
 
 
 # comprobacion de cada fila
-def comprobar_filas():
+def comprobar_filas(Tablero):
   # traemos las variables globales necesarias
   global el_juego_funciona
   # comprobamos que todos los valores en una fila sean iguales y no esten vacios
@@ -204,7 +207,7 @@ def comprobar_filas():
 
 
 # comprobamos las columnas para ganar
-def comprobar_columnas():
+def comprobar_columnas(Tablero):
   # traemos las variables globales necesarias
   global el_juego_funciona
   # comprobamos que tienen el mismo valor y no estan vacias
@@ -227,7 +230,7 @@ def comprobar_columnas():
 
 
 # comprobamos las diagonales para ganar
-def comprobar_diagonales():
+def comprobar_diagonales(Tablero):
   # traemos las variables globales necesarias
   global el_juego_funciona
   # comprobamos que tengan el mismo valor y no sea vacio
@@ -259,10 +262,10 @@ def comprobar_tablas():
     return False
 
 
-def comprobar_victoria_imaginaria():
-    Ganador_fila_imaginaria = comprobar_filas_imaginarias()
-    Ganador_columna_imaginaria = comprobar_columnas_imaginarias()
-    Ganador_diagonal_imaginaria = comprobar_diagonales_imaginarias()
+def comprobar_victoria_imaginaria(TableroImaginario):
+    Ganador_fila_imaginaria = comprobar_filas(TableroImaginario)
+    Ganador_columna_imaginaria = comprobar_columnas(TableroImaginario)
+    Ganador_diagonal_imaginaria = comprobar_diagonales(TableroImaginario)
 
     if Ganador_fila_imaginaria:
       GanadorImaginario = "O"
@@ -274,54 +277,6 @@ def comprobar_victoria_imaginaria():
       GanadorImaginario = None
     return GanadorImaginario
 
-
-
-def comprobar_filas_imaginarias():
- # comprobamos que todos los valores en una fila sean iguales y no esten vacios
-  fila_1imaginaria =TableroImaginario[0] ==TableroImaginario[1] ==TableroImaginario[2] != "-"
-  fila_2imaginaria =TableroImaginario[3] ==TableroImaginario[4] ==TableroImaginario[5] != "-"
-  fila_3imaginaria =TableroImaginario[6] ==TableroImaginario[7] ==TableroImaginario[8] != "-"
-  # obtenemos el ganador
-  if fila_1imaginaria:
-    return TableroImaginario[0] 
-  elif fila_2imaginaria:
-    return TableroImaginario[3] 
-  elif fila_3imaginaria:
-    return TableroImaginario[6] 
-  # seguimos el codigo si no hay fila
-  else:
-    return None
-
-def comprobar_columnas_imaginarias():
-    # comprobamos que tienen el mismo valor y no estan vacias
-  columna_1imaginaria =TableroImaginario[0] ==TableroImaginario[3] ==TableroImaginario[6] != "-"
-  columna_2imaginaria =TableroImaginario[1] ==TableroImaginario[4] ==TableroImaginario[7] != "-"
-  columna_3imaginaria =TableroImaginario[2] ==TableroImaginario[5] ==TableroImaginario[8] != "-"
-
-  #  obtenemos el ganador
-  if columna_1imaginaria:
-     return TableroImaginario[0] 
-  elif columna_2imaginaria:
-    return TableroImaginario[1] 
-  elif columna_3imaginaria:
-    return TableroImaginario[2] 
-  # seguimos el codigo si no hay columna
-  else:
-    return None
-
-def comprobar_diagonales_imaginarias():
-    # comprobamos que tengan el mismo valor y no sea vacio
-  diagonal_1imaginaria =TableroImaginario[0] ==TableroImaginario[4] ==TableroImaginario[8] != "-"
-  diagonal_2imaginaria =TableroImaginario[2] ==TableroImaginario[4] ==TableroImaginario[6] != "-"
-
-  # obtenemos el ganador
-  if diagonal_1imaginaria:
-    return TableroImaginario[0] 
-  elif diagonal_2imaginaria:
-    return TableroImaginario[2]
-  #continuamos el codigo
-  else:
-    return None
 
 #  funcion para cambiar jugador en cada turno
 def Cambiar_jugador():
