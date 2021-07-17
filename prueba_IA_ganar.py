@@ -75,38 +75,55 @@ def Jugada(Jugador):
     elif Jugador=="O":
         jugada_ordenador()
 
+def calcularJugada(i, TableroImaginario):
+  posicionImaginaria= i
+  posicionImaginaria=int(posicionImaginaria)
+  posicionImaginaria-=1
+  if TableroImaginario[posicionImaginaria]== "-":
+      TableroImaginario[posicionImaginaria]="O"
+      GanadorImaginario= comprobar_victoria_imaginaria()
+      if GanadorImaginario== "O":
+         
+          return posicionImaginaria
+      else:
+          return -1
+
+  else:
+      return -1
+
+def calcularJugadaAleatoria(TableroImaginario):
+  posicion= random.randint(1,9)
+  posicion= int(posicion) -1
+  # Nos aseguramos que se coloca en una casilla no escogida previamente
+  if TableroImaginario[posicion] == "-":
+    return posicion
+  else:
+     return -1
+
 
 def jugada_ordenador():
     #tramemos las variables globales.
-    contador=0
+    hayGanadorImaginaro=False
     print("es turno del ordenador ")
+    
     for i in range(1,9):
-        TableroImaginario=Tablero
-        posicionImaginaria= i
-        posicionImaginaria=int(posicionImaginaria)
-        posicionImaginaria-=1
-        if TableroImaginario[posicionImaginaria]== "-":
-            TableroImaginario[posicionImaginaria]="O"
-            GanadorImaginario= comprobar_victoria_imaginaria()
-            if GanadorImaginario== "O":
-                Tablero[posicionImaginaria]="O"
-                contador=1
-                break
-            else:
-                pass
-
-        else:
-            pass
-    if contador==0:
+      jugada = calcularJugada(i, Tablero[:])
+      if (jugada != -1):
+         Tablero[jugada]="O"
+         hayGanadorImaginaro = True
+         break
+       
+    if not hayGanadorImaginaro:
         valido=False
         while not valido:
-            posicion= random.randint(1,9)
-            posicion= int(posicion) -1
-             # Nos aseguramos que se coloca en una casilla no escogida previamente
-            if Tablero[posicion] == "-":
-             valido = True
-            else:
-             print("El ordenador esta pensando ")
+          print("#1 El ordenador esta calculando una jugada aleatoria ")
+          jugada = calcularJugadaAleatoria(Tablero[:])
+          if (jugada != -1):
+            Tablero[jugada]="O"
+            hayGanadorImaginaro = True
+            break
+       
+            
     return
 
 
