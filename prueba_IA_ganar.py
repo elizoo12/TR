@@ -105,10 +105,6 @@ def jugada_ordenador():
     #tramemos las variables globales.
     hayGanadorImaginaro=False
     print("es turno del ordenador ")
-    #HACEMOS TRAMPAS; BORRAR ANTES DE HACER NADA XD
-    Tablero[0] = "O"
-    Tablero[1] = "O"
-    #HACEMOS TRAMPAS; BORRAR ANTES DE HACER NADA XD
     for i in range(1,9):
       jugada = calcularJugada(i, Tablero[:])
       if (jugada >= 0 ):
