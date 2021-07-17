@@ -23,7 +23,7 @@ el_juego_funciona = True
 
 # Esta variable nos indicara quien es el ganador si lo hay, sino permanecera en estado None
 Ganador = None
-GanadorImaginario = None
+
 #  Esta variable indica de quien es el turno, de forma predeterminada empezaran las cruces 
 jugador_humano="X"
 ordenador="O"
@@ -78,7 +78,6 @@ def Jugada(Jugador):
 
 def jugada_ordenador():
     #tramemos las variables globales.
-    global GanadorImaginario
     contador=0
     print("es turno del ordenador ")
     for i in range(1,9):
@@ -88,7 +87,7 @@ def jugada_ordenador():
         posicionImaginaria-=1
         if TableroImaginario[posicionImaginaria]== "-":
             TableroImaginario[posicionImaginaria]="O"
-            comprobar_victoria_imaginaria()
+            GanadorImaginario= comprobar_victoria_imaginaria()
             if GanadorImaginario== "O":
                 Tablero[posicionImaginaria]="O"
                 contador=1
